@@ -25,7 +25,10 @@ SECRET_KEY = 'wz35cl001+=w^01l%6g-^hdym0mw1b)^eh#m-jmz4)3)(h-+7n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+	'klochenok.pythonanywhere.com'
+]
+
 
 
 # Application definition
