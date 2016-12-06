@@ -3,4 +3,5 @@ __pycache__
 girlsenv
 db.sqlite3
 /static
-.DS_Storelocal_settings.py
+.DS_Store
+local_settings.py
