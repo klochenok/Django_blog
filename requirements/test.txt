@@ -1,2 +1,2 @@
--r prod.txt
+-r ../requirements.txt
 pre-commit==0.9.4
