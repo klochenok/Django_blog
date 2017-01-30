@@ -10,23 +10,23 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
-import os
+import environ
 
-import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR = environ.Path(__file__) - 2
+env = environ.Env(DEBUG=(bool, False),)
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'wz35cl001+=w^01l%6g-^hdym0mw1b)^eh#m-jmz4)3)(h-+7n'
+SECRET_KEY = env('SECRET_KEY', default='wz35cl001+=w^01l%6g-^hdym0mw1b)^eh#m-jmz4)3)(h-+7n')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {'default': dj_database_url.config()}
+DATABASES = {'default': env.db(default='sqlite:///db.sqlite3')}
 
 
 # Password validation
@@ -116,16 +116,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT_DIR = env.path('STATIC_ROOT', BASE_DIR('static'))
+STATIC_ROOT = STATIC_ROOT_DIR()
 
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-ALLOWED_HOSTS = ['*']
-
-DEBUG = False
-
-try:
-    from .local_settings import * # noqa: F401, F403
-except ImportError:
-    pass
