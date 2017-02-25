@@ -9,7 +9,7 @@ containers:
       - pip
       - 'Django >=1.9, <2.0'
     - !Sh pip freeze > requirements/common.txt
-    - !Sh pip uninstall -r requirements/common.txt
+    - !Sh pip uninstall -r requirements/common.txt --yes
     - !Py3Install
       - 'gunicorn >=19.6, <20.0'
       - 'psycopg2 >=2.6, <3.0'
