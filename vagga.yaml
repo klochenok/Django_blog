@@ -1,0 +1,38 @@
+minimum-vagga: v0.7.0
+containers:
+  pip-freeze:
+    setup:
+    - !Alpine v3.4
+    - &django-build !BuildDeps
+      - postgresql-dev
+    - !Py3Install
+      - pip
+      - 'Django >=1.9, <2.0'
+    - !Sh pip freeze > requirements/common.txt
+    - !Sh pip uninstall -r requirements/common.txt --yes
+    - !Py3Install
+      - 'gunicorn >=19.6, <20.0'
+      - 'psycopg2 >=2.6, <3.0'
+      - 'whitenoise >=3.2.2, <4.0'
+      - 'django-environ >=0.4, <1.0'
+    - !Sh echo '-r requirements/common.txt' > requirements.txt
+    - !Sh pip freeze >> requirements.txt
+  django:
+    setup:
+    - !Alpine v3.4
+    - *django-build
+    - !PipConfig
+      dependencies: true
+    - !Install
+      - libpq
+    - !Py3Requirements requirements.txt
+    environ-file: /work/mysite/.env
+commands:
+  run: !Command
+    description: Start server
+    container: django
+    run: python3 manage.py runserver
+  manage.py: !Command
+    description: Shortcut to manage.py
+    container: django
+    run: [python3, manage.py]
