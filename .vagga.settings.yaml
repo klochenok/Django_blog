@@ -1,1 +1,2 @@
-  alpine-mirror: http://mirror.yandex.ru/mirrors/alpine/
+alpine-mirror: http://mirror.yandex.ru/mirrors/alpine/
+ubuntu-mirror: http://UA.archive.ubuntu.com/ubuntu

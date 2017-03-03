@@ -1,2 +1,2 @@
--r ../requirements.txt
+-r common.txt
 pre-commit==0.12.1
